@@ -8,14 +8,14 @@ import createSagaMiddleware from 'redux-saga';
 
 import Counter from './components/Counter';
 import reducer from './reducers/reducers';
-import { helloSaga } from './sagas/sagas';
+import rootSaga from './sagas/sagas';
 
 const sagaMiddleware = createSagaMiddleware(); // middlewareを作成する
 const store = createStore(
   reducer,
   applyMiddleware(sagaMiddleware) // ここでmiddlewareがstoreに接続される
 );
-sagaMiddleware.run(helloSaga); // ここでSagaが起動する
+sagaMiddleware.run(rootSaga); // ここでSagaが起動する。複数のsagaが起動する場合は、rootSagaを経由する。
 
 const action = type => store.dispatch({ type });
 
@@ -24,7 +24,8 @@ function render() {
     <Counter
       value={store.getState()}
       onIncrement={() => action('INCREMENT')}
-      onDecrement={() => action('DECREMENT')} />,
+      onDecrement={() => action('DECREMENT')}
+      onIncrementAsync={() => action('INCREMENT_ASYNC')} />, // StoreのアクションにonIncrementAsynsを接続する
     document.getElementById('root')
   );
 }
