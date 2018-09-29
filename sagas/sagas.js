@@ -1,6 +1,6 @@
 //@ts-check
 import { delay } from 'redux-saga';
-import { put, takeEvery, all } from 'redux-saga/effects';
+import { put, takeEvery, all, call } from 'redux-saga/effects';
 
 export function* helloSaga() {
     console.log('Hello Sagas!');
@@ -9,7 +9,8 @@ export function* helloSaga() {
 // middlewareに対してyieldされたobjectはPromiseが完了するまで、middlewareがSagaをsuspendする。
 // この例では、incrementAsync SagaはdelayがPromiseを返却するまで、1分suspendされる。
 export function* incrementAsync() {
-    yield delay(1000); // delayは指定したミリ秒の後に解決することをPromiseするutility関数
+    // callを使って呼び出すと、
+    yield call(delay, 1000); // delayは指定したミリ秒の後に解決することをPromiseするutility関数
     // あるyieldがpromiseされたら、Sagaは再開され、次のyieldを実行する
 
     // 次のyieldはINCREMENTアクションをdispatchするようにmiddlewareに教えるもの
