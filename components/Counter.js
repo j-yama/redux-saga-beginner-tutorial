@@ -1,3 +1,4 @@
+//@ts-check
 /*eslint-disable no-unused-vars */
 import React, { Component, PropTypes } from 'react'
 
